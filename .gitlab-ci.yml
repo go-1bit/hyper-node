@@ -1,0 +1,58 @@
+# We have 2 stage Test and Deploy
+stages:
+  - test
+  - deploy
+
+# Config cache
+cache:
+  paths:
+    - node_modules/
+
+# Test job
+test:
+  # Docker image
+  image: node:latest
+  # Attach Test job to Test stage
+  stage: test
+  # Config to use GitLab Shared Runner with Executor Docker
+  tags:
+    - main
+  script:
+    - echo "PORT"=$PORT >> nodemon.json
+    - echo "SMTP_EMAIL"=$SMTP_EMAIL >> nodemon.json
+    - echo "SMTP_PORT"=$SMTP_PORT >> nodemon.json
+    - echo "SMTP_PASSWORD"=$SMTP_PASSWORD >> nodemon.json
+    - echo "SMTP_USER"=$SMTP_USER >> nodemon.json
+    - echo "SMTP_HOST"=$SMTP_HOST >> nodemon.json
+    - echo "SMTP_SSL"=$SMTP_SSL >> nodemon.json
+    - rm -rf node_modules package-lock.json
+    - npm install
+  #    - npm run test
+  # Defines the names of branches and tags the job runs for (just want to trigger pipelines)
+  only:
+    - main
+
+# Deploy job
+deploy:
+  # Attach Deploy job to Deploy stage
+  stage: deploy
+  # Config to use our Runner with Executor Shell
+  tags:
+    - main
+  script:
+    # Only copy changed files to project folder
+    - cp -r -u * $PROJECT_DIR
+    - cd $PROJECT_DIR
+    - echo "PORT"=$PORT >> nodemon.json
+    - echo "SMTP_EMAIL"=$SMTP_EMAIL >> nodemon.json
+    - echo "SMTP_PORT"=$SMTP_PORT >> nodemon.json
+    - echo "SMTP_PASSWORD"=$SMTP_PASSWORD >> nodemon.json
+    - echo "SMTP_USER"=$SMTP_USER >> nodemon.json
+    - echo "SMTP_HOST"=$SMTP_HOST >> nodemon.json
+    - echo "SMTP_SSL"=$SMTP_SSL >> nodemon.json
+    - npm install
+    # Restart NodeJS service
+    - npm start
+  #    - nodemon app.js
+  only:
+    - main

@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express-fileupload": "^1.4.0",
+    "hyper-express": "^6.4.10",
+    "minio": "^7.0.32",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^2.6.7",
+    "nodemailer": "^6.8.0",
+    "nodemailer-express-handlebars": "^5.0.0"
+  },
+  "name": "hyper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "stop": "NODE_ENV=production forever stop  app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
