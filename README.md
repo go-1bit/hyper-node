@@ -1,1 +1,2 @@
-just for fun
+no readme
+just for self 
