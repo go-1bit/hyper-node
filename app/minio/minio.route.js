@@ -1,7 +1,7 @@
 const {Router} = require('hyper-express')
 const minioController = require('./minio.controller')
 const router = new Router()
-const {uploading} = require('../../utils/upload')
+// const {uploading} = require('../../utils/upload')
 
 
 router.get('/bucket', minioController.getBuckets)
